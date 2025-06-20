@@ -4,14 +4,6 @@
       <el-col>
         <el-card>
           <div slot="header">
-            <svg-icon class="gayhub" icon-class="github" style="float:left" @click="goToProject"/>
-            <svg-icon class="dianbao" icon-class="telegram" style="float:left;margin-left: 10px"
-                      @click="gotoTgChannel"/>
-            <svg-icon class="bilibili" icon-class="bilibili" style="float:right;margin-left:10px"
-                      @click="gotoBiliBili"/>
-            <svg-icon class="youguan" icon-class="youtube" style="float:right;margin-left:10px" @click="gotoYouTuBe"/>
-            <svg-icon class="channel" icon-class="telegram" style="float:right;margin-left: 10px"
-                      @click="gotoTgChannel"/>
             <div style="text-align:center;font-size:15px">Fantasy の 订 阅 转 换</div>
           </div>
           <el-container>
@@ -181,7 +173,7 @@
                 </el-button>
               </el-divider>
               <el-form-item label="定制订阅:">
-                <el-input class="copy-content" disabled v-model="customSubUrl">
+                <el-input class="copy-content" v-model="customSubUrl">
                   <el-button
                       slot="append"
                       v-clipboard:copy="customSubUrl"
@@ -234,7 +226,7 @@
       </el-col>
     </el-row>
     <el-dialog
-        title="请选择需要观看的视频教程"
+        title="视频教程"
         :visible.sync="centerDialogVisible"
         :show-close="false"
         width="40vh"
