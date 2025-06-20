@@ -1014,7 +1014,16 @@ export default {
         confirmButtonText: '确定',
         dangerouslyUseHTMLString: true,
         customClass: 'msgbox'
-      });
+      })
+          .then(() => {
+            // 点击了“确定”按钮
+            console.log('公告弹窗的确定按钮被点击');
+          })
+          .catch(() => {
+            // 点击了右上角的关闭按钮 (×) 或按下了 Esc 键
+            // 阻止错误在控制台显示
+            console.log('公告弹窗被关闭 (取消操作)');
+          });
     },
     onCopy() {
       this.$message.success("已复制");
