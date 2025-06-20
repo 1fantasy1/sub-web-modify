@@ -41,17 +41,6 @@
                   <el-option v-for="(v, k) in options.customBackend" :key="k" :label="k" :value="v"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="短链选择:">
-                <el-select
-                    v-model="form.shortType"
-                    allow-create
-                    filterable
-                    placeholder="可输入其他可用短链API"
-                    style="width: 100%"
-                >
-                  <el-option v-for="(v, k) in options.shortTypes" :key="k" :label="k" :value="v"></el-option>
-                </el-select>
-              </el-form-item>
               <el-form-item label="远程配置:">
                 <el-select
                     v-model="form.remoteConfig"
@@ -203,19 +192,6 @@
                   </el-button>
                 </el-input>
               </el-form-item>
-              <el-form-item label="订阅短链:">
-                <el-input class="copy-content" v-model="customShortSubUrl"
-                          placeholder="输入自定义短链接后缀，点击生成短链接可反复生成">
-                  <el-button
-                      slot="append"
-                      v-clipboard:copy="customShortSubUrl"
-                      v-clipboard:success="onCopy"
-                      ref="copy-btn"
-                      icon="el-icon-document-copy"
-                  >复制
-                  </el-button>
-                </el-input>
-              </el-form-item>
               <el-form-item label-width="0px" style="margin-top: 40px; text-align: center">
                 <el-button
                     style="width: 120px"
@@ -223,14 +199,6 @@
                     @click="makeUrl"
                     :disabled="form.sourceSubUrl.length === 0 || btnBoolean"
                 >生成订阅链接
-                </el-button>
-                <el-button
-                    style="width: 120px"
-                    type="danger"
-                    @click="makeShortUrl"
-                    :loading="loading1"
-                    :disabled="customSubUrl.length === 0"
-                >生成短链接
                 </el-button>
               </el-form-item>
               <el-form-item label-width="0px" style="text-align: center">
@@ -427,7 +395,6 @@ const remoteConfigSample = process.env.VUE_APP_SUBCONVERTER_REMOTE_CONFIG
 const scriptConfigSample = process.env.VUE_APP_SCRIPT_CONFIG
 const filterConfigSample = process.env.VUE_APP_FILTER_CONFIG
 const defaultBackend = process.env.VUE_APP_SUBCONVERTER_DEFAULT_BACKEND
-const shortUrlBackend = process.env.VUE_APP_MYURLS_DEFAULT_BACKEND + '/short'
 const configUploadBackend = process.env.VUE_APP_CONFIG_UPLOAD_BACKEND + '/sub.php'
 const basicVideo = process.env.VUE_APP_BASIC_VIDEO
 const advancedVideo = process.env.VUE_APP_ADVANCED_VIDEO
@@ -465,13 +432,6 @@ export default {
           "Shadowsocks Android(SIP008)": "sssub",
           ShadowsocksD: "ssd",
           "自动判断客户端": "auto",
-        },
-        shortTypes: {
-          "v1.mk": "https://v1.mk/short",
-          "d1.mk": "https://d1.mk/short",
-          "dlj.tf": "https://dlj.tf/short",
-          "suo.yt": "https://suo.yt/short",
-          "sub.cm": "https://sub.cm/short",
         },
         customBackend: {
           "肥羊增强型后端【vless reality+hy1+hy2】": "https://url.v1.mk",
@@ -892,7 +852,6 @@ export default {
         sourceSubUrl: "",
         clientType: "",
         customBackend: this.getUrlParam() == "" ? "https://114514.675222.xyz" : this.getUrlParam(),
-        shortType: "https://v1.mk/short",
         remoteConfig: "https://raw.githubusercontent.com/1fantasy1/document/refs/heads/main/ACL4SSR_Online_Full_NoAuto.ini",
         excludeRemarks: "",
         includeRemarks: "",
@@ -926,11 +885,9 @@ export default {
           }
         }
       },
-      loading1: false,
       loading2: false,
       loading3: false,
       customSubUrl: "",
-      customShortSubUrl: "",
       dialogUploadConfigVisible: false,
       loadConfig: "",
       dialogLoadConfigVisible: false,
@@ -1161,39 +1118,6 @@ export default {
       }
       this.$copyText(this.customSubUrl);
       this.$message.success("定制订阅已复制到剪贴板");
-    },
-    makeShortUrl() {
-      let duan =
-          this.form.shortType === ""
-              ? shortUrlBackend
-              : this.form.shortType;
-      this.loading1 = true;
-      let data = new FormData();
-      data.append("longUrl", btoa(this.customSubUrl));
-      if (this.customShortSubUrl.trim() != "") {
-        data.append("shortKey", this.customShortSubUrl.trim().indexOf("http") < 0 ? this.customShortSubUrl.trim() : "");
-      }
-      this.$axios
-          .post(duan, data, {
-            header: {
-              "Content-Type": "application/form-data; charset=utf-8"
-            }
-          })
-          .then(res => {
-            if (res.data.Code === 1 && res.data.ShortUrl !== "") {
-              this.customShortSubUrl = res.data.ShortUrl;
-              this.$copyText(res.data.ShortUrl);
-              this.$message.success("短链接已复制到剪贴板（IOS设备和Safari浏览器不支持自动复制API，需手动点击复制按钮）");
-            } else {
-              this.$message.error("短链接获取失败：" + res.data.Message);
-            }
-          })
-          .catch(() => {
-            this.$message.error("短链接获取失败");
-          })
-          .finally(() => {
-            this.loading1 = false;
-          });
     },
     confirmUploadConfig() {
       this.loading2 = true;
