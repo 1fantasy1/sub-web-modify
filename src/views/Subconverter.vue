@@ -499,7 +499,7 @@ export default {
             options: [
               {
                 label: "默认",
-                value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_NoAuto.ini"
+                value: "https://raw.githubusercontent.com/1fantasy1/document/refs/heads/main/ACL4SSR_Online_Full_NoAuto.ini"
               },
               {
                 label: "默认（自动测速）",
@@ -893,18 +893,18 @@ export default {
         clientType: "",
         customBackend: this.getUrlParam() == "" ? "https://114514.675222.xyz" : this.getUrlParam(),
         shortType: "https://v1.mk/short",
-        remoteConfig: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_NoAuto.ini",
+        remoteConfig: "https://raw.githubusercontent.com/1fantasy1/document/refs/heads/main/ACL4SSR_Online_Full_NoAuto.ini",
         excludeRemarks: "",
         includeRemarks: "",
         filename: "",
         rename: "",
         devid: "",
-        interval: "",
+        interval: "2",
         emoji: true,
         nodeList: false,
         extraset: false,
         tls13: false,
-        udp: false,
+        udp: true,
         xudp: false,
         tfo: false,
         sort: false,
@@ -919,7 +919,7 @@ export default {
             doh: false // dns 查询是否使用 DoH
           },
           clash: {
-            doh: false
+            doh: true
           },
           singbox: {
             ipv6: false
