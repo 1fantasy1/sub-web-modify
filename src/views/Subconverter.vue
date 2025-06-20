@@ -55,113 +55,89 @@
                   </el-option-group>
                 </el-select>
               </el-form-item>
-              <el-form-item label-width="0px">
-                <el-collapse>
-                  <el-collapse-item>
-                    <template slot="title">
-                      <el-form-item label="高级功能:" style="width: 100%;">
-                        <el-button
-                            type="limr"
-                            style="width: 100%;"
-                            icon="el-icon-more-outline"
-                        >点击显示/隐藏
-                        </el-button>
-                      </el-form-item>
-                    </template>
-                    <el-form-item label="包含节点:">
-                      <el-input v-model="form.includeRemarks" placeholder="要保留的节点，支持正则"/>
-                    </el-form-item>
-                    <el-form-item label="排除节点:">
-                      <el-input v-model="form.excludeRemarks" placeholder="要排除的节点，支持正则"/>
-                    </el-form-item>
-                    <el-form-item label="节点命名:">
-                      <el-input v-model="form.rename" placeholder="举例：`a@b``1@2`，|符可用\转义"/>
-                    </el-form-item>
-                    <el-form-item label="远程设备:">
-                      <el-input v-model="form.devid" placeholder="用于设置QuantumultX的远程设备ID"/>
-                    </el-form-item>
-                    <el-form-item label="更新间隔:">
-                      <el-input v-model="form.interval" placeholder="返用于设置托管配置更新间隔，单位为天"/>
-                    </el-form-item>
-                    <el-form-item label="订阅命名:">
-                      <el-input v-model="form.filename"
-                                placeholder="返回的订阅文件名，可以在支持文件名的客户端中显示出来"/>
-                    </el-form-item>
-                    <el-form-item class="eldiy" label-width="0px">
-                      <el-row type="flex">
-                        <el-col>
-                          <el-checkbox v-model="form.nodeList" label="仅输出节点信息" border></el-checkbox>
-                        </el-col>
-                        <el-popover placement="bottom" v-model="form.extraset">
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.emoji" label="Emoji"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.insert" label="插入默认节点"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.udp" label="启用 UDP"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.xudp" label="启用 XUDP"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.tfo" label="启用 TFO"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.sort" label="基础节点排序"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.tpl.clash.doh" label="Clash.DoH"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.appendType" label="插入节点类型"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.tpl.surge.doh" label="Surge.DoH"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.tls13" label="开启TLS_1.3"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.expand" label="展开规则全文"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.new_name" label="Clash新字段名"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.scv" label="跳过证书验证"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.fdn" label="过滤不支持节点"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <div style="margin-left: 35%">
-                                <el-checkbox v-model="form.tpl.singbox.ipv6" label="Sing-Box支持IPV6"></el-checkbox>
-                              </div>
-                            </el-col>
-                          </el-row>
-                          <el-button slot="reference">更多选项</el-button>
-                        </el-popover>
-                      </el-row>
-                    </el-form-item>
-                  </el-collapse-item>
-                </el-collapse>
+              <el-form-item label="更新间隔:">
+                <el-input v-model="form.interval" placeholder="请填写数字">
+                  <template slot="suffix">
+                    <span style="padding-right: 10px;">单位：天</span>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-form-item label="订阅命名:">
+                <el-input v-model="form.filename"
+                          placeholder="返回的订阅文件名，可以在支持文件名的客户端中显示出来"/>
+              </el-form-item>
+              <el-form-item class="eldiy" label-width="0px">
+                <el-row type="flex">
+                  <el-col>
+                    <el-checkbox v-model="form.nodeList" label="仅输出节点信息" border></el-checkbox>
+                  </el-col>
+                  <el-popover placement="bottom" v-model="form.extraset">
+                    <el-row :gutter="10">
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.emoji" label="Emoji"></el-checkbox>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.insert" label="插入默认节点"></el-checkbox>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.udp" label="启用 UDP"></el-checkbox>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.xudp" label="启用 XUDP"></el-checkbox>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.tfo" label="启用 TFO"></el-checkbox>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.sort" label="基础节点排序"></el-checkbox>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.tpl.clash.doh" label="Clash.DoH"></el-checkbox>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.appendType" label="插入节点类型"></el-checkbox>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.tpl.surge.doh" label="Surge.DoH"></el-checkbox>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.tls13" label="开启TLS_1.3"></el-checkbox>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.expand" label="展开规则全文"></el-checkbox>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.new_name" label="Clash新字段名"></el-checkbox>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.scv" label="跳过证书验证"></el-checkbox>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox v-model="form.fdn" label="过滤不支持节点"></el-checkbox>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="12">
+                        <div style="margin-left: 35%">
+                          <el-checkbox v-model="form.tpl.singbox.ipv6" label="Sing-Box支持IPV6"></el-checkbox>
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-button slot="reference">更多选项</el-button>
+                  </el-popover>
+                </el-row>
               </el-form-item>
               <div style="margin-top: 30px"></div>
               <el-divider content-position="center">
