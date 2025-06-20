@@ -12,7 +12,7 @@
             <svg-icon class="youguan" icon-class="youtube" style="float:right;margin-left:10px" @click="gotoYouTuBe"/>
             <svg-icon class="channel" icon-class="telegram" style="float:right;margin-left: 10px"
                       @click="gotoTgChannel"/>
-            <div style="text-align:center;font-size:15px">fantasy の 订 阅 转 换</div>
+            <div style="text-align:center;font-size:15px">Fantasy の 订 阅 转 换</div>
           </div>
           <el-container>
             <el-form :model="form" label-width="80px" label-position="left" style="width: 100%">
@@ -907,7 +907,6 @@ export default {
   mounted() {
     this.tanchuang();
     this.form.clientType = "clash";
-    this.getBackendVersion();
     this.anhei();
     let lightMedia = window.matchMedia('(prefers-color-scheme: light)');
     let darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
@@ -922,9 +921,6 @@ export default {
     } //监听系统主题，自动切换！
   },
   methods: {
-    selectChanged() {
-      this.getBackendVersion();
-    },
     getUrlParam() {
       let query = window.location.search.substring(1);
       let vars = query.split('&');
@@ -1328,22 +1324,6 @@ export default {
           .finally(() => {
             this.loading2 = false;
           })
-    },
-    getBackendVersion() {
-      this.$axios
-          .get(
-              this.form.customBackend + "/version"
-          )
-          .then(res => {
-            this.backendVersion = res.data.replace(/backend\n$/gm, "");
-            this.backendVersion = this.backendVersion.replace("subconverter", "SubConverter");
-            let a = this.form.customBackend.indexOf("url.v1.mk") !== -1 || this.form.customBackend.indexOf("sub.d1.mk") !== -1;
-            let b = this.form.customBackend.indexOf("127.0.0.1") !== -1;
-            a ? this.$message.success(`${this.backendVersion}` + "肥羊负载均衡增强版后端，已屏蔽免费节点池（会返回403），额外支持vless reality+hysteria+hysteria2订阅转换") : b ? this.$message.success(`${this.backendVersion}` + "本地局域网自建版后端") : this.$message.success(`${this.backendVersion}` + "官方原版后端不支持vless/hysteria订阅转换");
-          })
-          .catch(() => {
-            this.$message.error("请求SubConverter版本号返回数据失败，该后端不可用！");
-          });
     }
   }
 };
