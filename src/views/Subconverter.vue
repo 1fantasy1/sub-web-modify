@@ -277,7 +277,7 @@
             <el-form-item prop="uploadScript">
               <el-input
                   v-model="uploadScript"
-                  placeholder="本功能暂停使用，如有兴趣，自行去我的GitHub参考sub-web-api项目部署！"
+                  placeholder="功能暂停失效，因为还没去GitHub参考sub-web-api项目部署！"
                   type="textarea"
                   :autosize="{ minRows: 15, maxRows: 15}"
                   maxlength="50000"
@@ -303,7 +303,7 @@
             <el-form-item prop="uploadFilter">
               <el-input
                   v-model="uploadFilter"
-                  placeholder="本功能暂停使用，如有兴趣，自行去我的GitHub参考sub-web-api项目部署！"
+                  placeholder="功能暂停失效，因为还没去GitHub参考sub-web-api项目部署！"
                   type="textarea"
                   :autosize="{ minRows: 15, maxRows: 15}"
                   maxlength="50000"
@@ -409,7 +409,7 @@ export default {
           subconverter作者提供: "https://sub.xeton.dev",
           "sub-web作者提供": "https://api.wcc.best",
           "sub作者&lhie1提供": "https://api.dler.io",
-          "自建后端": "https://114514.675222.xyz",
+          "自建后端": "https://rain.fantasy00.tech:25500",
         },
         backendOptions: [
           {value: "https://url.v1.mk"},
@@ -419,7 +419,7 @@ export default {
           {value: "https://sub.xeton.dev"},
           {value: "https://api.wcc.best"},
           {value: "https://api.dler.io"},
-          {value: "https://114514.675222.xyz"}
+          {value: "https://rain.fantasy00.tech:25500"}
         ],
         remoteConfig: [
           {
@@ -819,7 +819,7 @@ export default {
       form: {
         sourceSubUrl: "",
         clientType: "",
-        customBackend: this.getUrlParam() == "" ? "https://114514.675222.xyz" : this.getUrlParam(),
+        customBackend: this.getUrlParam() == "" ? "https://rain.fantasy00.tech:25500" : this.getUrlParam(),
         remoteConfig: "https://raw.githubusercontent.com/1fantasy1/document/refs/heads/main/ACL4SSR_Online_Full_NoAuto.ini",
         excludeRemarks: "",
         includeRemarks: "",
