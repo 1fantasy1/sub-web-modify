@@ -281,6 +281,9 @@ export default {
     } //监听系统主题，自动切换！
   },
   methods: {
+    selectChanged() {
+      this.getBackendVersion();
+    },
     getUrlParam() {
       let query = window.location.search.substring(1);
       let vars = query.split('&');
