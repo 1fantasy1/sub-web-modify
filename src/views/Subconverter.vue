@@ -231,11 +231,7 @@ export default {
         clientType: "",
         customBackend: this.getUrlParam() === "" ? "https://rain.fantasy00.tech:25500" : this.getUrlParam(),
         remoteConfig: "https://raw.githubusercontent.com/1fantasy1/document/refs/heads/main/ACL4SSR_Online_Full_NoAuto.ini",
-        excludeRemarks: "",
-        includeRemarks: "",
         filename: "",
-        rename: "",
-        devid: "",
         emoji: true,
         nodeList: false,
         extraset: false,
@@ -357,25 +353,9 @@ export default {
         this.customSubUrl +=
             "&config=" + encodeURIComponent(this.form.remoteConfig);
       }
-      if (this.form.excludeRemarks !== "") {
-        this.customSubUrl +=
-            "&exclude=" + encodeURIComponent(this.form.excludeRemarks);
-      }
-      if (this.form.includeRemarks !== "") {
-        this.customSubUrl +=
-            "&include=" + encodeURIComponent(this.form.includeRemarks);
-      }
       if (this.form.filename !== "") {
         this.customSubUrl +=
             "&filename=" + encodeURIComponent(this.form.filename);
-      }
-      if (this.form.rename !== "") {
-        this.customSubUrl +=
-            "&rename=" + encodeURIComponent(this.form.rename);
-      }
-      if (this.form.devid !== "") {
-        this.customSubUrl +=
-            "&dev_id=" + encodeURIComponent(this.form.devid);
       }
       if (this.form.appendType) {
         this.customSubUrl +=
@@ -423,7 +403,7 @@ export default {
         }
       }
       this.$copyText(this.customSubUrl);
-      this.$message.success("定制订阅已复制到剪贴板");
+      this.$message.success("订阅已经转换好了哦(已复制到剪切板)");
     }
   }
 };
