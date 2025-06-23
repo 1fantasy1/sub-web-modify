@@ -179,16 +179,6 @@
   </div>
 </template>
 <script>
-const project = process.env.VUE_APP_PROJECT
-const remoteConfigSample = process.env.VUE_APP_SUBCONVERTER_REMOTE_CONFIG
-const scriptConfigSample = process.env.VUE_APP_SCRIPT_CONFIG
-const filterConfigSample = process.env.VUE_APP_FILTER_CONFIG
-const defaultBackend = process.env.VUE_APP_SUBCONVERTER_DEFAULT_BACKEND
-const basicVideo = process.env.VUE_APP_BASIC_VIDEO
-const advancedVideo = process.env.VUE_APP_ADVANCED_VIDEO
-const tgBotLink = process.env.VUE_APP_BOT_LINK
-const yglink = process.env.VUE_APP_YOUTUBE_LINK
-const bzlink = process.env.VUE_APP_BILIBILI_LINK
 const downld = 'http://' + window.location.host + '/download.html'
 export default {
   data() {
@@ -239,7 +229,7 @@ export default {
       form: {
         sourceSubUrl: "",
         clientType: "",
-        customBackend: this.getUrlParam() == "" ? "https://rain.fantasy00.tech:25500" : this.getUrlParam(),
+        customBackend: this.getUrlParam() === "" ? "https://rain.fantasy00.tech:25500" : this.getUrlParam(),
         remoteConfig: "https://raw.githubusercontent.com/1fantasy1/document/refs/heads/main/ACL4SSR_Online_Full_NoAuto.ini",
         excludeRemarks: "",
         includeRemarks: "",
@@ -272,9 +262,7 @@ export default {
           }
         }
       },
-      loading3: false,
       customSubUrl: "",
-      myBot: tgBotLink
     };
   },
   created() {
@@ -342,18 +330,6 @@ export default {
     },
     onCopy() {
       this.$message.success("已复制");
-    },
-    goToProject() {
-      window.open(project);
-    },
-    gotoTgChannel() {
-      window.open(tgBotLink);
-    },
-    gotoBiliBili() {
-      window.open(bzlink);
-    },
-    gotoYouTuBe() {
-      window.open(yglink);
     },
     toolsDown() {
       window.open(downld);
