@@ -267,3 +267,289 @@ header p {
         padding: 1.2rem;
     }
 }
+/* public/css/style.css */
+
+/* ... (之前的 CSS 代码保持不变) ... */
+
+/* --- Custom Confirm Modal Styles --- */
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed; /* 固定在视口 */
+    z-index: 1000; /* 确保在最上层 */
+    left: 0;
+    top: 0;
+    width: 100%; /* 宽度占满 */
+    height: 100%; /* 高度占满 */
+    overflow: auto; /* 如果内容过多，允许滚动 */
+    background-color: rgba(0, 0, 0, 0.6); /* 深色半透明背景，增强沉浸感 */
+    backdrop-filter: blur(8px); /* 背景模糊效果 */
+    -webkit-backdrop-filter: blur(8px); /* Safari 兼容 */
+    animation: fadeIn 0.3s ease-out; /* 淡入动画 */
+    justify-content: center; /* 水平居中内容 */
+    align-items: center; /* 垂直居中内容 */
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer; /* 点击遮罩层也可以关闭 */
+}
+
+.modal-content {
+    background-color: var(--card-bg); /* 使用卡片背景色 */
+    margin: 10% auto; /* 距离顶部10%，并居中 */
+    padding: 25px;
+    border-radius: 15px; /* 更圆润的角 */
+    width: 90%; /* 默认宽度 */
+    max-width: 500px; /* 最大宽度 */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 15px 20px rgba(0, 0, 0, 0.15); /* 更深的阴影 */
+    animation: zoomIn 0.4s ease-out; /* 缩放进入动画 */
+    position: relative; /* 相对定位，用于内部元素定位 */
+    color: var(--dark); /* 文字颜色 */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* 微弱的边框 */
+}
+
+.modal-header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* 分隔线 */
+    margin-bottom: 20px;
+}
+
+.modal-header h3 {
+    font-size: 1.8rem; /* 标题字号 */
+    font-weight: 700; /* 加粗 */
+    color: var(--primary); /* 使用主题色 */
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.modal-body {
+    padding-bottom: 25px;
+    text-align: center; /* 内容居中 */
+}
+
+.modal-body p {
+    font-size: 1.15rem; /* 内容字号 */
+    line-height: 1.7; /* 行高 */
+    margin-bottom: 15px;
+    color: #333; /* 更柔和的文字颜色 */
+}
+
+#modal-url {
+    font-weight: 600; /* URL 加粗 */
+    color: var(--primary-light); /* 使用亮色主题 */
+    word-break: break-all; /* 防止长URL溢出 */
+    text-decoration: underline; /* 给URL添加下划线 */
+    text-decoration-color: var(--secondary);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center; /* 按钮居中 */
+    gap: 20px; /* 按钮间距 */
+    border-top: 1px solid rgba(0, 0, 0, 0.1); /* 分隔线 */
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+/* 按钮样式，复用页面上的 .btn 和添加特定类 */
+.modal-footer .btn {
+    padding: 0.9rem 2rem; /* 按钮内边距 */
+    border-radius: 50px; /* 圆角按钮 */
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* 按钮阴影 */
+}
+
+.modal-footer .btn-primary {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+}
+
+.modal-footer .btn-primary:hover {
+    transform: translateY(-4px); /* 悬停抬升 */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* 悬停加深阴影 */
+}
+
+.modal-footer .btn-secondary {
+    background: var(--light);
+    color: var(--dark);
+    border: 1px solid var(--gray);
+}
+
+.modal-footer .btn-secondary:hover {
+    background: var(--gray);
+    color: white;
+    border-color: var(--gray);
+}
+
+/* 模态框动画 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 15% auto; /* 减小顶部边距 */
+        padding: 15px;
+    }
+    .modal-header h3 {
+        font-size: 1.5rem;
+    }
+    .modal-body p {
+        font-size: 1rem;
+    }
+    .modal-footer .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+    }
+    .modal-footer {
+        flex-direction: column; /* 按钮垂直排列 */
+        gap: 10px;
+    }
+}
+
+/* 添加在原有CSS后面 */
+.modal-content {
+    max-width: 500px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+.modal-header {
+    position: relative;
+    padding: 25px 25px 15px;
+    border-bottom: none;
+}
+
+.icon-container {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 15px;
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+.icon-container i {
+    font-size: 32px;
+    color: white;
+}
+
+.modal-header h3 {
+    font-size: 22px;
+    margin: 10px 0;
+    background: linear-gradient(to right, #93c5fd, #c4b5fd);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.modal-body {
+    padding: 20px 30px;
+}
+
+.url-display {
+    background: rgba(30, 41, 59, 0.7);
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 14px;
+    word-break: break-all;
+    border-left: 3px solid #3b82f6;
+    font-family: monospace;
+}
+
+.warning-text {
+    font-size: 14px;
+    color: #fbbf24;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 25px;
+    gap: 15px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #3b82f6, #6366f1);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid #64748b;
+    color: #94a3b8;
+}
+
+.btn-secondary:hover {
+    background: rgba(100, 116, 139, 0.2);
+    color: #e2e8f0;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+@media (max-width: 576px) {
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .icon-container {
+        width: 60px;
+        height: 60px;
+    }
+
+    .modal-header h3 {
+        font-size: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+}
