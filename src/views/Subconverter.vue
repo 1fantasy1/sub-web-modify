@@ -180,6 +180,11 @@
 </template>
 <script>
 const downld = 'http://' + window.location.host + '/download.html'
+const envBackend = (process.env.VUE_APP_SUBCONVERTER_DEFAULT_BACKEND || "")
+  .trim()
+  .replace(/^['"]|['"]$/g, "")
+  .replace(/\/+$/, "")
+const defaultBackend = envBackend || "https://rain.fantasy00.tech:25500"
 export default {
   data() {
     return {
@@ -195,11 +200,11 @@ export default {
           "自动判断客户端": "auto",
         },
         customBackend: {
-          "自建后端": "https://rain.fantasy00.tech:25500",
+          "自建后端": defaultBackend,
           "肥羊增强型后端【vless reality+hy1+hy2】": "https://url.v1.mk",
         },
         backendOptions: [
-          {value: "https://rain.fantasy00.tech:25500"},
+          {value: defaultBackend},
           {value: "https://url.v1.mk"}
         ],
         remoteConfig: [
@@ -229,7 +234,7 @@ export default {
       form: {
         sourceSubUrl: "",
         clientType: "",
-        customBackend: this.getUrlParam() === "" ? "https://rain.fantasy00.tech:25500" : this.getUrlParam(),
+        customBackend: this.getUrlParam() === "" ? defaultBackend : this.getUrlParam(),
         remoteConfig: "https://raw.githubusercontent.com/1fantasy1/document/refs/heads/main/ACL4SSR_Online_Full_NoAuto.ini",
         filename: "",
         emoji: true,
@@ -283,6 +288,26 @@ export default {
   methods: {
     selectChanged() {
       this.getBackendVersion();
+    },
+    async getBackendVersion() {
+      if (!this.form.customBackend) {
+        this.backendVersion = "";
+        return;
+      }
+
+      const backend = this.form.customBackend.replace(/\/+$/, "");
+      try {
+        const res = await this.$axios.get(backend + "/version", {timeout: 3000});
+        if (typeof res.data === "string") {
+          this.backendVersion = res.data;
+        } else if (res.data && typeof res.data === "object" && res.data.version) {
+          this.backendVersion = String(res.data.version);
+        } else {
+          this.backendVersion = "";
+        }
+      } catch (e) {
+        this.backendVersion = "";
+      }
     },
     getUrlParam() {
       let query = window.location.search.substring(1);
@@ -338,10 +363,11 @@ export default {
         this.$message.error("订阅链接与客户端为必填项");
         return false;
       }
-      let backend =
+      let backend = (
           this.form.customBackend === ""
               ? defaultBackend
-              : this.form.customBackend;
+              : this.form.customBackend
+      ).replace(/\/+$/, "");
       let sourceSub = this.form.sourceSubUrl;
       sourceSub = sourceSub.replace(/(\n|\r|\n\r)/g, "|");
       this.customSubUrl =
