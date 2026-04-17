@@ -1,60 +1,43 @@
-function unauthorized(realm) {
-  return new Response("Authentication required", {
-    status: 401,
+import {
+  SESSION_COOKIE_NAME,
+  getAuthCredentials,
+  getCookieValue,
+  isPublicPath,
+  isValidSession,
+  safeNextPath
+} from "./lib/auth";
+
+function redirectToLogin(requestUrl) {
+  const url = new URL(requestUrl);
+  const loginUrl = new URL("/login", url.origin);
+  loginUrl.searchParams.set("next", safeNextPath(`${url.pathname}${url.search}`));
+
+  return new Response(null, {
+    status: 302,
     headers: {
-      "WWW-Authenticate": `Basic realm="${realm}", charset="UTF-8"`,
+      Location: loginUrl.toString(),
       "Cache-Control": "no-store"
     }
   });
 }
 
-function parseBasicAuth(authorization) {
-  if (!authorization || !authorization.startsWith("Basic ")) {
-    return null;
-  }
-
-  const encoded = authorization.slice(6).trim();
-  if (!encoded) {
-    return null;
-  }
-
-  let decoded;
-  try {
-    decoded = atob(encoded);
-  } catch (error) {
-    return null;
-  }
-
-  const separatorIndex = decoded.indexOf(":");
-  if (separatorIndex < 0) {
-    return null;
-  }
-
-  return {
-    username: decoded.slice(0, separatorIndex),
-    password: decoded.slice(separatorIndex + 1)
-  };
-}
-
 export async function onRequest(context) {
-  const username = String(context.env.BASIC_AUTH_USERNAME || "").trim();
-  const password = String(context.env.BASIC_AUTH_PASSWORD || "").trim();
+  const credentials = getAuthCredentials(context.env);
 
-  // Do not enforce authentication when credentials are not configured.
-  if (!username || !password) {
+  // Keep site open when auth credentials are not configured.
+  if (!credentials) {
     return context.next();
   }
 
-  const realm = String(context.env.BASIC_AUTH_REALM || "Sub Web").trim() || "Sub Web";
-  const credentials = parseBasicAuth(context.request.headers.get("Authorization"));
-
-  if (!credentials) {
-    return unauthorized(realm);
+  const path = new URL(context.request.url).pathname;
+  if (isPublicPath(path)) {
+    return context.next();
   }
 
-  if (credentials.username !== username || credentials.password !== password) {
-    return unauthorized(realm);
+  const token = getCookieValue(context.request.headers.get("Cookie"), SESSION_COOKIE_NAME);
+  if (token && await isValidSession(context.env, token)) {
+    return context.next();
   }
 
-  return context.next();
+  return redirectToLogin(context.request.url);
 }
